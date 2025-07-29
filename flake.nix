@@ -32,16 +32,14 @@
           default = (inputs.nixpkgs.lib.composeManyExtensions [
             (import inputs.rust-overlay)
             (f: p: {
-              rustToolchain' = (
-                p.rust-bin.stable.latest
-              );
-              rustPlatform' = p.makeRustPlatform {
-                cargo = f.rustToolchain';
-                rustc = f.rustToolchain';
-              };
-             })
-            (f: p: {
-              prefligit = p.rustPlatform'.buildRustPackage rec {
+              pre-commit' = p.pre-commit;
+              pre-commit = (p.makeRustPlatform (let
+                  rustToolchain =  p.rust-bin.stable.latest.minimal;
+                in
+                {
+                  cargo = rustToolchain;
+                  rustc = rustToolchain;
+                })).buildRustPackage rec {
                 pname = "prefligit";
                 version = "0.0.12";
                 src = p.fetchFromGitHub {
@@ -63,8 +61,6 @@
                 '';
                 meta.mainProgram = "pre-commit";
               };
-              # And allow calling it as `pkgs.pre-commit` by default.
-              pre-commit = f.prefligit;
             })
           ]);
         };
