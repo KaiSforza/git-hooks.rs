@@ -2,7 +2,8 @@
 
 Use this flake overlay to skip using python for all of your pre-commit needs!
 
-Using my system it saves ~120mb of python, though it still needs `git` to function.
+Using my system it saves ~120mb of python, though it still needs `git` to
+function.
 
 Below are the sizes of the first couple of layers of the devshells using
 different pre-commit programs. The first size is the total size of the item and
