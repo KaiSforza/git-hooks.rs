@@ -40,24 +40,24 @@
                   cargo = rustToolchain;
                   rustc = rustToolchain;
                 })).buildRustPackage rec {
-                pname = "prefligit";
-                version = "0.0.12";
+                pname = "prek";
+                version = "0.1.2";
                 src = p.fetchFromGitHub {
                   owner = "j178";
                   repo = pname;
                   rev = "v${version}";
-                  hash = "sha256-7Pxj7durMszGWlpL1gickXNwHEigDVRR8VRbTj0+7P0=";
+                  hash = "sha256-iu+vcoT9VldTQKTVd+qJcGpPkFoLdhjaLiyNfcz3geU=";
                 };
-                cargoHash = "sha256-hMCMLN6EmY9sDmQK7B8xUSeMe9fjZdfowb4VnE+sluM=";
+                cargoHash = "sha256-/C8IKjpmyv0Pv7ahRk/YmSAMuEJdhp9/bzKE+tiirDI=";
                 # The tests fail here because the isolated env doesn't really play nice
                 # with how the full test suite works.
                 doCheck = false;
                 # Adds a `pre-commit` command into the path from prefligit
                 nativeBuildInputs = [ p.makeWrapper ];
                 postInstall = ''
-                  wrapProgram $out/bin/prefligit \
+                  wrapProgram $out/bin/prek \
                     --suffix PATH : ${p.lib.makeBinPath [ p.gitMinimal ]}
-                  ln -svr $out/bin/prefligit $out/bin/pre-commit
+                  ln -svr $out/bin/prek $out/bin/pre-commit
                 '';
                 meta.mainProgram = "pre-commit";
               };
